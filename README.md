@@ -9,7 +9,7 @@ This project aims to create a responsive and user-friendly news application with
 link: (https://neoma-ai-frontend.vercel.app/)
 
 ## Video Demo
-link:  (https://www.loo)
+link: ([https://www.loo](https://www.loom.com/share/785d391ae62149158e34f0b28b23a77e?sid=05fab017-396e-47f0-bf88-ed457ef90332))
 
 8. **Design and UI/UX:**
    - Created a best possible user-friendly interface that is responsive and provides a smooth user experience.
