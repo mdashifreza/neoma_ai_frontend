@@ -26,7 +26,7 @@ const Main = () => {
             const response = await axios.get(url);
             const responceData = await response.data;
             setNews(responceData);
-            console.log(news)
+            // console.log(news)
         } catch (error) {
             console.log("error while api calling", error);
         }
@@ -72,10 +72,47 @@ const Main = () => {
         }
     };
 
+    const handleSearch = (e) => {
+        const val = e.target.value.toLowerCase();
+        if (val.trim() === "") {
+            ApiCall();
+        } else {
+            const filterBySearchVal = news.filter((item) => item.title.toLowerCase().includes(val));
+            setNews(filterBySearchVal)
+        }
+    }
+
+    const duplicateFilter = Array.from(
+        new Set(news.flatMap((item) => item.category))
+    );
+    
+    const [selectedCategory, setSelectedCategory] = useState("")
+    const handleCategory = (e) => {
+        const val = e.target.value;
+        setSelectedCategory(val);
+        if(val !== undefined){
+            const filteredNews = news?.filter((item) => item?.category?.includes(val));
+            setNews(filteredNews)
+        }
+    }
+
     return (
         <div className="container mx-auto p-4">
             <h2 className="text-2xl font-bold mb-4">News Aggregator API</h2>
-            <ul className=" bg-gray-300 p-4 rounded">
+            <input type="text" className="border-2 border-gray-300 w-full mb-2 p-1 rounded placeholder:p-2" placeholder="Seacrh News By Title" onChange={handleSearch} />
+            <div className="float-right">
+                <select className="bg-purple-500 text-white p-2 rounded mb-1" onChange={handleCategory} value= {selectedCategory}>
+                    <option disabled value = "">
+                        Filter By Category
+                    </option>
+                    {duplicateFilter.map((item, index) => (
+                        <option value={item} key={index}>
+                            {item}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className="bg-gray-300 p-4 rounded border-2  border-red-900">
                 {news.map((item) => (
                     <NewsCard
                         key={item._id}
@@ -84,16 +121,16 @@ const Main = () => {
                         handleDeleteNews={handleDeleteNews}
                     />
                 ))}
-            </ul>
+            </div>
             <CreateNewsForm
                 formData={formData}
                 handleInputChange={handleInputChange}
                 handleCreateNews={handleCreateNews}
                 isUpdateMode={isUpdateMode}
                 handleUpdateNews={() => {
-                    handleUpdateNews(selectedNewsId); // use the selected news ID for update
+                    handleUpdateNews(selectedNewsId);
                     setIsUpdateMode(false);
-                    setSelectedNewsId(null); // reset the selected news ID
+                    setSelectedNewsId(null);
                 }}
             />
         </div>

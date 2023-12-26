@@ -24,7 +24,7 @@ const NewsCard = ({ item, handleUpdateNews, handleDeleteNews }) => {
                 <p>
                     <img
                         src={item.image_url ? item.image_url : neoma}
-                        alt="Image"
+                        alt={`${item.title} Thumbnail`}
                         className="h-24 w-44 mb-2 rounded"
                     />
                 </p>
